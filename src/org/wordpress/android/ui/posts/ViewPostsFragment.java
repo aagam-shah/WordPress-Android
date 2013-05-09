@@ -30,6 +30,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import org.xmlrpc.android.XMLRPCClient;
@@ -45,7 +46,7 @@ import org.wordpress.android.util.WPAlertDialogFragment;
 
 public class ViewPostsFragment extends ListFragment {
     /** Called when the activity is first created. */
-    private String[] mPostIDs, mTitles, mDateCreated, mDateCreatedFormatted,
+    private static String[] mPostIDs, mTitles, mDateCreated, mDateCreatedFormatted,
             mDraftIDs, mDraftTitles, mDraftDateCreated, mStatuses, mDraftStatuses;
     private int[] mUploaded;
     private int mRowID = 0;
@@ -64,11 +65,25 @@ public class ViewPostsFragment extends ListFragment {
     public int numRecords = 20;
     public ViewSwitcher switcher;
     public getRecentPostsTask getPostsTask;
+    public static int curr_position=0;
+    public String getnextID(){
+        
+        return mPostIDs[curr_position+1];
+    }
+    
+ public String getprevID(){
+        if(curr_position>0)
+        return mPostIDs[curr_position-1];
+        else
+            return mPostIDs[curr_position];
+        
+        
+    }
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-
+        Toast.makeText(getActivity(), "id : ", Toast.LENGTH_SHORT).show();
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
             isPage = extras.getBoolean("viewPages");
@@ -273,6 +288,7 @@ public class ViewPostsFragment extends ListFragment {
                                         .getId(), mSelectedID, isPage);
                                 if (post.getId() >= 0) {
                                     WordPress.currentPost = post;
+                                    curr_position=position;
                                     mOnPostSelectedListener.onPostSelected(post);
                                     mPostListAdapter.notifyDataSetChanged();
                                 } else {

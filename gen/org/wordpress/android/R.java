@@ -1483,9 +1483,10 @@ containing a value of this type.
     public static final class menu {
         public static final int categories=0x7f0e0000;
         public static final int edit=0x7f0e0001;
-        public static final int posts=0x7f0e0002;
-        public static final int refresh_only=0x7f0e0003;
-        public static final int webview=0x7f0e0004;
+        public static final int post_cab=0x7f0e0002;
+        public static final int posts=0x7f0e0003;
+        public static final int refresh_only=0x7f0e0004;
+        public static final int webview=0x7f0e0005;
     }
     public static final class string {
         public static final int about=0x7f0c0031;

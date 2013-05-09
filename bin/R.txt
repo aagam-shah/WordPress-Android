@@ -695,9 +695,10 @@ int layout viewpost 0x7f030040
 int layout webview 0x7f030041
 int menu categories 0x7f0e0000
 int menu edit 0x7f0e0001
-int menu posts 0x7f0e0002
-int menu refresh_only 0x7f0e0003
-int menu webview 0x7f0e0004
+int menu post_cab 0x7f0e0002
+int menu posts 0x7f0e0003
+int menu refresh_only 0x7f0e0004
+int menu webview 0x7f0e0005
 int string about 0x7f0c0031
 int string above_text 0x7f0c018d
 int string abs__action_bar_home_description 0x7f0c0000

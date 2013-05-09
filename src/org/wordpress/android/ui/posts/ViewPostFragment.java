@@ -4,22 +4,26 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.wordpress.android.R;
 import org.wordpress.android.WordPress;
+import org.wordpress.android.WordPressDB;
 import org.wordpress.android.models.Post;
+import org.wordpress.android.ui.posts.ViewPostsFragment.OnPostSelectedListener;
 import org.wordpress.android.util.EscapeUtils;
 import org.wordpress.android.util.StringHelper;
 
 public class ViewPostFragment extends Fragment {
     /** Called when the activity is first created. */
-
+    private OnPostSelectedListener mOnPostSelectedListener;
     private OnDetailPostActionListener onDetailPostActionListener;
     PostsActivity parentActivity;
 
@@ -44,7 +48,36 @@ public class ViewPostFragment extends Fragment {
             Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.viewpost, container, false);
+        
+  String l = WordPress.currentPost.getPostid();
 
+
+  
+  ViewPostsFragment vpf = new ViewPostsFragment();
+  String nextpostid = vpf.getnextID();
+  String prevpostid = vpf.getprevID();
+  int previd=  Integer.parseInt(prevpostid);
+  int nextid=  Integer.parseInt(nextpostid);
+  Post post = new Post(WordPress.currentBlog.getId(),
+          nextid, true);
+  
+  Toast.makeText(getActivity(), "id : "+nextid, Toast.LENGTH_SHORT).show();
+  
+  Intent i2 = new Intent(getActivity().getApplicationContext(),
+          EditPostActivity.class);
+  i2.putExtra("postID", (long)nextid);
+  i2.putExtra("id", WordPress.currentBlog.getId());
+  startActivityForResult(i2, 0);
+  
+  WordPress.currentPost = post;
+  /*mOnPostSelectedListener.onPostSelected(post);
+  FragmentManager fm = getActivity().getSupportFragmentManager();
+  ViewPostFragment f = (ViewPostFragment) fm
+          .findFragmentById(R.id.postDetail);*/
+  
+  
+  
+  
         // button listeners here
         ImageButton editPostButton = (ImageButton) v
                 .findViewById(R.id.editPost);

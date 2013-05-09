@@ -3,12 +3,21 @@ package org.wordpress.android.ui.posts;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.actionbarsherlock.view.ActionMode;
+import com.actionbarsherlock.view.ActionMode.Callback;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.ActionMode;
+
 public class ViewPostActivity extends FragmentActivity {
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        
+        
         if (savedInstanceState == null) {
             // During initial setup, plug in the details fragment.
             ViewPostFragment postFragment = new ViewPostFragment();
