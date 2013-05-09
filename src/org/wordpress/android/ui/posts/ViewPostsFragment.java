@@ -67,7 +67,9 @@ public class ViewPostsFragment extends ListFragment {
     public getRecentPostsTask getPostsTask;
     public static int curr_position=0;
     public String getnextID(){
-        
+        if((curr_position-1)==mPostIDs.length)
+            return mPostIDs[curr_position];
+        else
         return mPostIDs[curr_position+1];
     }
     
