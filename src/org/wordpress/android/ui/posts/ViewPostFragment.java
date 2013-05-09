@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageButton;
@@ -15,7 +19,6 @@ import android.widget.Toast;
 
 import org.wordpress.android.R;
 import org.wordpress.android.WordPress;
-import org.wordpress.android.WordPressDB;
 import org.wordpress.android.models.Post;
 import org.wordpress.android.ui.posts.ViewPostsFragment.OnPostSelectedListener;
 import org.wordpress.android.util.EscapeUtils;
@@ -50,33 +53,6 @@ public class ViewPostFragment extends Fragment {
         View v = inflater.inflate(R.layout.viewpost, container, false);
         
   String l = WordPress.currentPost.getPostid();
-
-
-  
-  ViewPostsFragment vpf = new ViewPostsFragment();
-  String nextpostid = vpf.getnextID();
-  String prevpostid = vpf.getprevID();
-  int previd=  Integer.parseInt(prevpostid);
-  int nextid=  Integer.parseInt(nextpostid);
-  Post post = new Post(WordPress.currentBlog.getId(),
-          nextid, true);
-  
-  Toast.makeText(getActivity(), "id : "+nextid, Toast.LENGTH_SHORT).show();
-  
-  Intent i2 = new Intent(getActivity().getApplicationContext(),
-          EditPostActivity.class);
-  i2.putExtra("postID", (long)nextid);
-  i2.putExtra("id", WordPress.currentBlog.getId());
-  startActivityForResult(i2, 0);
-  
-  WordPress.currentPost = post;
-  /*mOnPostSelectedListener.onPostSelected(post);
-  FragmentManager fm = getActivity().getSupportFragmentManager();
-  ViewPostFragment f = (ViewPostFragment) fm
-          .findFragmentById(R.id.postDetail);*/
-  
-  
-  
   
         // button listeners here
         ImageButton editPostButton = (ImageButton) v
@@ -157,6 +133,61 @@ public class ViewPostFragment extends Fragment {
                     + " must implement Callback");
         }
     }
+    
+    
+    
+    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+
+       private final int SWIPE_MIN_DISTANCE = 120;
+       private final int SWIPE_THRESHOLD_VELOCITY = 200;
+   
+       @Override
+       public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+          if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {                
+           // Right to left, your code here
+              swipePost(1);
+              Toast.makeText(getActivity(), "R - L", Toast.LENGTH_SHORT).show();
+             return true;
+          } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) >  SWIPE_THRESHOLD_VELOCITY) {
+           // Left to right, your code here
+              swipePost(0);
+              Toast.makeText(getActivity(), "L - R", Toast.LENGTH_SHORT).show();
+              return true;
+          }
+          
+          return false;
+       }
+    }
+    
+    
+    public void swipePost(int motionEvent){
+        ViewPostsFragment vpf = new ViewPostsFragment();
+        String nextpostid = vpf.getnextID();
+        String prevpostid = vpf.getprevID();
+        long newid=1;
+        int previd=  Integer.parseInt(prevpostid);
+        int nextid=  Integer.parseInt(nextpostid);
+        if(motionEvent==0){
+            newid = (long)previd;
+        }
+        else{
+            newid=(long)nextid;
+               }
+        
+        Toast.makeText(getActivity(), "Opening new post...", Toast.LENGTH_SHORT).show();
+        /*Post post = new Post(WordPress.currentBlog.getId(),
+                newid, true);
+        mOnPostSelectedListener.onPostSelected(post);
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        ViewPostFragment f = (ViewPostFragment) fm
+                .findFragmentById(R.id.postDetail);
+        
+        WordPress.currentPost = post;*/
+        
+    }
+    
+    
+  public GestureDetector gesturedetector;
 
     public void loadPost(Post post) {
 
@@ -172,6 +203,17 @@ public class ViewPostFragment extends Fragment {
 
         WebView webView = (WebView) getActivity().findViewById(
                 R.id.viewPostWebView);
+        gesturedetector = new GestureDetector(new GestureListener());
+        
+        webView.setOnTouchListener(new OnTouchListener() {
+            
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                gesturedetector.onTouchEvent(event);
+                return true;
+            }
+        });
         TextView tv = (TextView) getActivity().findViewById(
                 R.id.viewPostTextView);
         ImageButton shareURLButton = (ImageButton) getActivity().findViewById(
