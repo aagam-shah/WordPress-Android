@@ -175,14 +175,11 @@ public class ViewPostFragment extends Fragment {
                }
         
         Toast.makeText(getActivity(), "Opening new post...", Toast.LENGTH_SHORT).show();
-        /*Post post = new Post(WordPress.currentBlog.getId(),
+        Post post = new Post(WordPress.currentBlog.getId(),
                 newid, true);
-        mOnPostSelectedListener.onPostSelected(post);
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        ViewPostFragment f = (ViewPostFragment) fm
-                .findFragmentById(R.id.postDetail);
         
-        WordPress.currentPost = post;*/
+        loadPost(post);
+        WordPress.currentPost = post;
         
     }
     
