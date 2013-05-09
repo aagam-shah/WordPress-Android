@@ -50,7 +50,7 @@ public class ViewPostsFragment extends ListFragment {
             mDraftIDs, mDraftTitles, mDraftDateCreated, mStatuses, mDraftStatuses;
     private int[] mUploaded;
     private int mRowID = 0;
-    private long mSelectedID;
+    public long mSelectedID;
     private PostListAdapter mPostListAdapter;
     private OnPostSelectedListener mOnPostSelectedListener;
     private OnRefreshListener mOnRefreshListener;
@@ -67,25 +67,27 @@ public class ViewPostsFragment extends ListFragment {
     public getRecentPostsTask getPostsTask;
     public static int curr_position=0;
     public String getnextID(){
-        if((curr_position-1)==mPostIDs.length)
+        if(curr_position+1>=mPostIDs.length)
             return mPostIDs[curr_position];
-        else
-        return mPostIDs[curr_position+1];
+        else{
+        curr_position=curr_position+1; 
+       return mPostIDs[curr_position];
+        }
     }
     
  public String getprevID(){
-        if(curr_position>0)
-        return mPostIDs[curr_position-1];
-        else
-            return mPostIDs[curr_position];
-        
-        
+     if(curr_position-1<0)
+         return mPostIDs[curr_position];
+     else{
+     curr_position=curr_position-1;
+     return mPostIDs[curr_position];
+     }
+              
     }
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        Toast.makeText(getActivity(), "id : ", Toast.LENGTH_SHORT).show();
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
             isPage = extras.getBoolean("viewPages");

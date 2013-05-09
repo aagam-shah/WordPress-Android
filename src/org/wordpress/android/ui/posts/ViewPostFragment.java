@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +12,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +25,7 @@ import org.wordpress.android.util.StringHelper;
 
 public class ViewPostFragment extends Fragment {
     /** Called when the activity is first created. */
-    private OnPostSelectedListener mOnPostSelectedListener;
+    public OnPostSelectedListener op;
     private OnDetailPostActionListener onDetailPostActionListener;
     PostsActivity parentActivity;
 
@@ -134,22 +133,28 @@ public class ViewPostFragment extends Fragment {
         }
     }
     
-    
+    public boolean dispatchTouchEvent(MotionEvent ev){
+
+       // super.dispatchTouchEvent(ev);
+
+        return gesturedetector.onTouchEvent(ev);
+
+        }
     
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
-       private final int SWIPE_MIN_DISTANCE = 120;
-       private final int SWIPE_THRESHOLD_VELOCITY = 200;
+       private final int SWIPE_MIN_DISTANCE = 50;
+       private final int SWIPE_THRESHOLD_VELOCITY = 100;
    
        @Override
        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
           if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {                
-           // Right to left, your code here
+           // Right to left
               swipePost(1);
               Toast.makeText(getActivity(), "R - L", Toast.LENGTH_SHORT).show();
              return true;
           } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) >  SWIPE_THRESHOLD_VELOCITY) {
-           // Left to right, your code here
+           // Left to right
               swipePost(0);
               Toast.makeText(getActivity(), "L - R", Toast.LENGTH_SHORT).show();
               return true;
@@ -162,36 +167,34 @@ public class ViewPostFragment extends Fragment {
     
     public void swipePost(int motionEvent){
         ViewPostsFragment vpf = new ViewPostsFragment();
-        String nextpostid = vpf.getnextID();
-        String prevpostid = vpf.getprevID();
-        long newid=1;
-        int previd=  Integer.parseInt(prevpostid);
-        int nextid=  Integer.parseInt(nextpostid);
+        String prevpostid,nextpostid;
+        long newid;
+        
         if(motionEvent==0){
+            prevpostid = vpf.getprevID();
+            int previd=  Integer.parseInt(prevpostid);
             newid = (long)previd;
         }
         else{
+            nextpostid = vpf.getnextID();
+            int nextid=  Integer.parseInt(nextpostid);
             newid=(long)nextid;
                }
-        
-        Toast.makeText(getActivity(), "Opening new post...", Toast.LENGTH_SHORT).show();
-        Post post = new Post(WordPress.currentBlog.getId(),
-                newid, true);
-        
+        Post post = new Post(WordPress.currentBlog.getId(),newid
+                , false);
         loadPost(post);
-        WordPress.currentPost = post;
-        
-    }
+        }
     
     
   public GestureDetector gesturedetector;
 
+    @SuppressWarnings("deprecation")
     public void loadPost(Post post) {
 
         // Don't load if the Post object of title are null, see #395
         if (post == null || post.getTitle() == null)
             return;
-
+        RelativeLayout layout = (RelativeLayout)getActivity().findViewById(R.id.postHead);
         TextView title = (TextView) getActivity().findViewById(R.id.postTitle);
         if (post.getTitle().equals(""))
             title.setText("(" + getResources().getText(R.string.untitled) + ")");
@@ -200,9 +203,10 @@ public class ViewPostFragment extends Fragment {
 
         WebView webView = (WebView) getActivity().findViewById(
                 R.id.viewPostWebView);
+        
         gesturedetector = new GestureDetector(new GestureListener());
         
-        webView.setOnTouchListener(new OnTouchListener() {
+        layout.setOnTouchListener(new OnTouchListener() {
             
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -210,6 +214,19 @@ public class ViewPostFragment extends Fragment {
                 gesturedetector.onTouchEvent(event);
                 return true;
             }
+            
+            
+        });
+webView.setOnTouchListener(new OnTouchListener() {
+            
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                gesturedetector.onTouchEvent(event);
+                return true;
+            }
+            
+            
         });
         TextView tv = (TextView) getActivity().findViewById(
                 R.id.viewPostTextView);
