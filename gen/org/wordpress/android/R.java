@@ -1252,7 +1252,7 @@ containing a value of this type.
         public static final int createWPAccount=0x7f0700ad;
         public static final int date=0x7f0700c0;
         public static final int deleteComment=0x7f0700cc;
-        public static final int deletePost=0x7f0700e3;
+        public static final int deletePost=0x7f0700e4;
         public static final int disableHome=0x7f07000f;
         public static final int divider=0x7f0700ca;
         public static final int dotcom=0x7f0700d9;
@@ -1263,13 +1263,13 @@ containing a value of this type.
         public static final int dotorgExisting=0x7f0700af;
         public static final int down=0x7f0700b7;
         public static final int editComment=0x7f0700cd;
-        public static final int editPost=0x7f0700e6;
+        public static final int editPost=0x7f0700e7;
         public static final int edit_query=0x7f070037;
         public static final int em=0x7f070090;
         public static final int email_url=0x7f070074;
         public static final int featuredImage=0x7f07005d;
         public static final int featuredInPost=0x7f07005e;
-        public static final int footerBar=0x7f0700e2;
+        public static final int footerBar=0x7f0700e3;
         public static final int formatBar=0x7f07008e;
         public static final int fullSizeImage=0x7f070065;
         public static final int gravatar=0x7f0700c4;
@@ -1315,16 +1315,16 @@ containing a value of this type.
         /**  The ID of the menu container. 
          */
         public static final int md__menu=0x7f070003;
-        public static final int menu_browser=0x7f0700ec;
-        public static final int menu_edit_post=0x7f0700ea;
-        public static final int menu_new_category=0x7f0700e9;
-        public static final int menu_new_post=0x7f0700eb;
+        public static final int menu_browser=0x7f0700ed;
+        public static final int menu_edit_post=0x7f0700eb;
+        public static final int menu_new_category=0x7f0700ea;
+        public static final int menu_new_post=0x7f0700ec;
         public static final int menu_posts_btn=0x7f0700a5;
-        public static final int menu_refresh=0x7f0700e8;
+        public static final int menu_refresh=0x7f0700e9;
         public static final int menu_row_badge=0x7f0700a8;
         public static final int menu_row_icon=0x7f0700a6;
         public static final int menu_row_title=0x7f0700a7;
-        public static final int menu_share=0x7f0700ed;
+        public static final int menu_share=0x7f0700ee;
         public static final int moderatecomments=0x7f0700d2;
         public static final int moderationBar=0x7f0700d3;
         public static final int more=0x7f070095;
@@ -1345,6 +1345,7 @@ containing a value of this type.
         public static final int postFragmentContainer=0x7f0700b3;
         public static final int postHead=0x7f0700de;
         public static final int postList=0x7f0700b2;
+        public static final int postScroll=0x7f0700e0;
         public static final int postTitle=0x7f070075;
         public static final int post_password=0x7f07008d;
         public static final int posts=0x7f0700b0;
@@ -1376,7 +1377,7 @@ containing a value of this type.
         public static final int selectedCategories=0x7f070082;
         public static final int settings=0x7f07004f;
         public static final int settingsButton=0x7f07004a;
-        public static final int sharePostLink=0x7f0700e5;
+        public static final int sharePostLink=0x7f0700e6;
         public static final int showCustom=0x7f07000e;
         public static final int showHome=0x7f07000b;
         public static final int showTitle=0x7f07000d;
@@ -1397,11 +1398,11 @@ containing a value of this type.
         public static final int useLogo=0x7f07000a;
         public static final int username=0x7f070048;
         public static final int viewMap=0x7f070084;
-        public static final int viewPost=0x7f0700e4;
-        public static final int viewPostTextView=0x7f0700e1;
-        public static final int viewPostWebView=0x7f0700e0;
+        public static final int viewPost=0x7f0700e5;
+        public static final int viewPostTextView=0x7f0700e2;
+        public static final int viewPostWebView=0x7f0700e1;
         public static final int webView=0x7f0700b5;
-        public static final int webview_wrapper=0x7f0700e7;
+        public static final int webview_wrapper=0x7f0700e8;
         public static final int welcome=0x7f0700ac;
         public static final int wordpress_logo=0x7f0700ab;
         public static final int wordpressdotcom=0x7f07004e;

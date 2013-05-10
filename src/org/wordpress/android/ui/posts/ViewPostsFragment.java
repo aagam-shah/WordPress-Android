@@ -50,7 +50,7 @@ public class ViewPostsFragment extends ListFragment {
             mDraftIDs, mDraftTitles, mDraftDateCreated, mStatuses, mDraftStatuses;
     private int[] mUploaded;
     private int mRowID = 0;
-    public long mSelectedID;
+    private long mSelectedID;
     private PostListAdapter mPostListAdapter;
     private OnPostSelectedListener mOnPostSelectedListener;
     private OnRefreshListener mOnRefreshListener;
@@ -67,7 +67,7 @@ public class ViewPostsFragment extends ListFragment {
     public getRecentPostsTask getPostsTask;
     public static int curr_position=0;
     public String getnextID(){
-        if(curr_position+1>=mPostIDs.length)
+        if(curr_position+1>mPostIDs.length)
             return mPostIDs[curr_position];
         else{
         curr_position=curr_position+1; 
